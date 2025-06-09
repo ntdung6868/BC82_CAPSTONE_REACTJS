@@ -8,4 +8,6 @@ export const PATH = {
   MOVIE_MANAGEMENT: "/admin/movie-management",
   USER_MANAGEMENT: "/admin/user-management",
   NOT_FOUND: "*",
+  MOVIES: "/movies",
+  COMING_SOON: "/coming-soon",
 };

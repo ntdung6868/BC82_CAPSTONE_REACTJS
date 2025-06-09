@@ -1,12 +1,35 @@
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/routes/path";
-import { Facebook, Instagram, Mail, Phone, Youtube } from "lucide-react";
-import React from "react";
+import {
+  Facebook,
+  Instagram,
+  Mail,
+  Phone,
+  Youtube,
+  CircleCheckIcon,
+  CircleHelpIcon,
+  CircleIcon,
+  MenuIcon,
+  ChevronDown,
+} from "lucide-react";
+import React, { useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import logo from "/img/logo.png";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
+  const [openSection, setOpenSection] = useState(null);
 
   const handleLogoClick = () => {
     navigate(PATH.HOME);
@@ -25,21 +48,394 @@ const HomeLayout = () => {
       <header className="h-[115px] border-2 border-b-gray-200 flex items-center">
         <div className="container h-full mx-auto flex items-center justify-between">
           <img src={logo} alt="DalaxyCinema" className="w-[115px] h-[60px] cursor-pointer" onClick={handleLogoClick} />
-          <div className="flex items-center gap-4">
-            <Button variant="outline" className="text-sm cursor-pointer" onClick={handleLogin}>
-              Login
-            </Button>
-            <Button className="text-sm cursor-pointer" onClick={handleRegister}>
-              Sign Up
-            </Button>
+          <div className="hidden lg:block">
+            <NavigationMenu viewport={false}>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Phim</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href={PATH.MOVIES}>PHIM ĐANG CHIẾU</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href={PATH.COMING_SOON}>PHIM SẮP CHIẾU</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Sản Phẩm</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Anh Trai Vượt Ngàn Chông Gai</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Galaxy Merch</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Góc Điên Ảnh</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Thể Loại Phim</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Diễn Viên</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Đạo Diễn</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Bình Luận Phim</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Blog Điện Ảnh</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Sự Kiện</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[200px] gap-4">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Ưu Đãi</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Phim Hay Tháng</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Anh Trai Vượt Ngàn Chông Gai</Link>
+                        </NavigationMenuLink>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Galaxy Merch</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Rạp/Giá Vé</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[300px] gap-2 p-2 max-h-[325px] overflow-y-auto -mr-2">
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Nguyễn Du</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Sala</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Tân Bình</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Kinh Dương Vương</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Quang Trung</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Bến Tre</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Mipec Long Biên</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Đà Nẵng</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Cà Mau</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Trung Chánh</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Huỳnh Tấn Phát</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Vinh</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Hải Phòng</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Nguyễn Văn Quá</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Buôn Ma Thuột</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Long Xuyên</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Co.opXtra Linh Trung</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Nha Trang Center</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Trường Chinh</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy GO! Mall Bà Rịa</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Cine+ Gold Coast Nha Trang</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Cine+ Thiso Phan Huy Ích</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Aeon Mall Huế</Link>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink asChild>
+                          <Link href="#">Dalaxy Parc Mall Q8</Link>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          <div className="flex gap-4">
+            <div className="flex items-center gap-4">
+              <Button variant="outline" className="text-sm cursor-pointer" onClick={handleLogin}>
+                Login
+              </Button>
+              <Button className="text-sm cursor-pointer" onClick={handleRegister}>
+                Sign Up
+              </Button>
+            </div>
+            {/* Mobile Navigation */}
+            <div className="flex items-center gap-4 lg:hidden ">
+              <Sheet>
+                <SheetTrigger>
+                  <MenuIcon className="w-6 h-6" />
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[250px] p-5">
+                  <div className="flex flex-col space-y-4 mt-10">
+                    {/* Phim Section */}
+                    <div className="border-b pb-2">
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setOpenSection("phim")}
+                      >
+                        <p className="font-semibold">Phim</p>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${openSection === "phim" ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                      {openSection === "phim" && (
+                        <div className="ml-2 flex flex-col space-y-1 text-sm mt-2">
+                          <Link to={PATH.MOVIES} className="hover:text-[#FD841F]">
+                            PHIM ĐANG CHIẾU
+                          </Link>
+                          <Link to={PATH.COMING_SOON} className="hover:text-[#FD841F]">
+                            PHIM SẮP CHIẾU
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Sản Phẩm Section */}
+                    <div className="border-b pb-2">
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setOpenSection("sanpham")}
+                      >
+                        <p className="font-semibold">Sản Phẩm</p>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${openSection === "sanpham" ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                      {openSection === "sanpham" && (
+                        <div className="ml-2 flex flex-col space-y-1 text-sm mt-2">
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Anh Trai Vượt Ngàn Chông Gai
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Galaxy Merch
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Góc Điện Ảnh Section */}
+                    <div className="border-b pb-2">
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setOpenSection("gocdienanh")}
+                      >
+                        <p className="font-semibold">Góc Điện Ảnh</p>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${openSection === "gocdienanh" ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                      {openSection === "gocdienanh" && (
+                        <div className="ml-2 flex flex-col space-y-1 text-sm mt-2">
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Thể Loại Phim
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Diễn Viên
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Đạo Diễn
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Bình Luận Phim
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Blog Điện Ảnh
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Sự Kiện Section */}
+                    <div className="border-b pb-2">
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setOpenSection("sukien")}
+                      >
+                        <p className="font-semibold">Sự Kiện</p>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${openSection === "sukien" ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                      {openSection === "sukien" && (
+                        <div className="ml-2 flex flex-col space-y-1 text-sm mt-2">
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Ưu Đãi
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Phim Hay Tháng
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Rạp/Giá Vé Section */}
+                    <div className="border-b pb-2">
+                      <div
+                        className="flex items-center justify-between cursor-pointer"
+                        onClick={() => setOpenSection("rapgiave")}
+                      >
+                        <p className="font-semibold">Rạp/Giá Vé</p>
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${openSection === "rapgiave" ? "rotate-180" : ""}`}
+                        />
+                      </div>
+                      {openSection === "rapgiave" && (
+                        <div className="ml-2 flex flex-col space-y-1 text-sm mt-2 max-h-[200px] overflow-y-auto">
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Nguyễn Du
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Sala
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Tân Bình
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Kinh Dương Vương
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Nha Trang Center
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Trường Chinh
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy GO! Mall Bà Rịa
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Cine+ Gold Coast Nha Trang
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Cine+ Thiso Phan Huy Ích
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Aeon Mall Huế
+                          </Link>
+                          <Link to="#" className="hover:text-[#FD841F]">
+                            Dalaxy Parc Mall Q8
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </header>
       <Outlet />
       <footer id="footer" className="bg-[#333333] text-gray-400">
-        <div className="mx-auto px-4 sm:px-[45px] md:px-4 max-w-screen-xl lg:max-w-4xl xl:max-w-screen-xl">
+        <div className="container mx-auto px-4 sm:px-[45px] md:px-4 lg:max-w-4xl xl:max-w-screen-xl">
           <div className="py-8">
-            <div className="grid grid-cols-2 gap-y-4 md:gap-y-0 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4">
+            <div className="grid grid-cols-2 gap-y-4 md:gap-y-0 sm:grid-cols-2 lg:grid-cols-4 ">
               {/* Giới thiệu Section */}
               <div>
                 <h3 className="text-white mb-3 md:mb-6 text-sm font-semibold">GIỚI THIỆU</h3>
@@ -176,36 +572,34 @@ const HomeLayout = () => {
               </div>
 
               {/* Connect Section */}
-              <div id="register" className="grid grid-cols-1 md:grid-cols-[300px_minmax(900px,1fr)_100px] xl:block">
-                <div id="connect" className="footer__connect">
-                  <div className="mb-5">
-                    <img
-                      alt="Galaxy - Cinema"
-                      loading="lazy"
-                      width="94"
-                      height="42"
-                      src={logo}
-                      className="text-transparent grayscale brightness-500"
-                    />
-                  </div>
-                  <ul className="flex gap-4">
-                    <li>
-                      <a href="https://www.facebook.com/galaxycinevn" target="_blank">
-                        <Facebook className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.youtube.com/user/galaxymovies" target="_blank">
-                        <Youtube className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.instagram.com/galaxycinema" target="_blank">
-                        <Instagram className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+
+              <div className="flex flex-col gap-8">
+                <img
+                  alt="Galaxy - Cinema"
+                  loading="lazy"
+                  width="94"
+                  height="42"
+                  src={logo}
+                  className="text-transparent grayscale brightness-500"
+                />
+
+                <ul className="flex gap-4">
+                  <li>
+                    <a href="https://www.facebook.com/999999" target="_blank">
+                      <Facebook className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.youtube.com/999999" target="_blank">
+                      <Youtube className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.instagram.com/999999" target="_blank">
+                      <Instagram className="w-8 h-8 text-gray-400 hover:text-[#FD841F] transition-all duration-300" />
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
