@@ -260,10 +260,10 @@ const HomeLayout = () => {
           <div className="flex gap-4">
             <div className="flex items-center gap-4">
               <Button variant="outline" className="text-sm cursor-pointer" onClick={handleLogin}>
-                Login
+                Đăng nhập
               </Button>
               <Button className="text-sm cursor-pointer" onClick={handleRegister}>
-                Sign Up
+                Đăng ký
               </Button>
             </div>
             {/* Mobile Navigation */}
