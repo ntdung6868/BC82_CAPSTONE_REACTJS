@@ -47,7 +47,7 @@ const Carousel = () => {
         }}
         navigation={true}
         modules={[Pagination, Navigation, Autoplay]}
-        className="mySwiper w-full max-w-4/5 shadow-lg"
+        className="mySwiper w-full max-w-[1520px] shadow-lg"
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index}>
