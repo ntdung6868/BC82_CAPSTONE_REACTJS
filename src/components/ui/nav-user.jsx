@@ -48,7 +48,7 @@ export function NavUser({ user }) {
           <AvatarImage src={user.avatar} alt={user.hoTen} />
           <AvatarFallback className="rounded-lg">{getInitials(user?.hoTen)}</AvatarFallback>
         </Avatar>
-        <div className="grid flex-1 text-left text-sm leading-tight">
+        <div className="flex-1 text-left text-sm leading-tight hidden xl:grid">
           <span className="truncate font-medium">{user?.hoTen}</span>
           <span className="text-muted-foreground truncate text-xs">{user?.email}</span>
         </div>

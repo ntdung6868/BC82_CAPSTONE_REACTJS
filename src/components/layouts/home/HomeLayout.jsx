@@ -61,11 +61,16 @@ const HomeLayout = () => {
   };
 
   return (
-    <div className=" flex flex-col h-screen">
-      <header className="h-[115px] border-2 border-b-gray-200 flex items-center">
-        <div className="container h-full mx-auto flex items-center justify-between">
-          <img src={logo} alt="DalaxyCinema" className="w-[115px] h-[60px] cursor-pointer" onClick={handleLogoClick} />
-          <div className="hidden lg:block">
+    <div className="flex flex-col h-screen">
+      <header className="w-screen border-2 border-b-gray-200 flex items-center">
+        <div className="container w-7/10 h-[60px] lg:h-[100px] mx-auto flex items-center justify-between">
+          <img
+            src={logo}
+            alt="DalaxyCinema"
+            className="w-[77px] lg:w-[115px] p-3 cursor-pointer"
+            onClick={handleLogoClick}
+          />
+          <div className="hidden lg:block z-10">
             <NavigationMenu viewport={false}>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -273,7 +278,7 @@ const HomeLayout = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pl-10">
             <div className="flex items-center gap-4">
               {user ? (
                 <NavUser user={user} />

@@ -22,12 +22,12 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="relative px-16">
+    <>
       <style>
         {`
           .swiper-button-prev::after,
           .swiper-button-next::after {
-            font-size: 30px !important;
+            font-size: 28px !important;
             color: #666 !important;
           }
             
@@ -49,7 +49,7 @@ const Carousel = () => {
         }}
         navigation={true}
         modules={[Pagination, Navigation, Autoplay]}
-        className="mySwiper w-17/20"
+        className="mySwiper"
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index}>
@@ -57,7 +57,7 @@ const Carousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </>
   );
 };
 
