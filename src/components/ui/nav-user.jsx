@@ -45,7 +45,7 @@ export function NavUser({ user }) {
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer">
         <Avatar className="h-8 w-8 rounded-lg grayscale">
-          <AvatarImage src={user.avatar} alt={user.hoTen} />
+          {/* <AvatarImage src={user.avatar} alt={user.hoTen} /> */}
           <AvatarFallback className="rounded-lg">{getInitials(user?.hoTen)}</AvatarFallback>
         </Avatar>
         <div className="flex-1 text-left text-sm leading-tight hidden xl:grid">
@@ -62,7 +62,7 @@ export function NavUser({ user }) {
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={user.avatar} alt={user.hoTen} />
+              {/* <AvatarImage src={user.avatar} alt={user.hoTen} /> */}
               <AvatarFallback className="rounded-lg">{getInitials(user?.hoTen)}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
