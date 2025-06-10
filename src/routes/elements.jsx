@@ -52,6 +52,10 @@ const useRouterElements = () => {
           element: <Dashboard />,
         },
         {
+          path: PATH.DASHBOARD,
+          element: <Dashboard />,
+        },
+        {
           path: PATH.MOVIE_MANAGEMENT,
           element: <MovieManagement />,
         },

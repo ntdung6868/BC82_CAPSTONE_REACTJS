@@ -14,39 +14,12 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { NavUser } from "@/components/ui/nav-user";
-import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "@/store/slices/user";
+import { useRoleNavigation } from "@/hooks/useRoleNavigation";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
   const [openSection, setOpenSection] = useState(null);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user); // Lấy user từ store
-
-  useEffect(() => {
-    // Khôi phục user từ localStorage
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        dispatch(setUser(parsedUser));
-      } catch (error) {
-        console.error("Error parsing user from localStorage:", error);
-        localStorage.removeItem("user");
-      }
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    // Điều hướng dựa trên vai trò của user
-    if (user) {
-      if (user.maLoaiNguoiDung === "ROLE.ADMIN") {
-        navigate("/admin");
-      } else if (user.maLoaiNguoiDung === "ROLE.USER") {
-        navigate("/");
-      }
-    }
-  }, [user, navigate]); // Chạy lại khi user thay đổi
+  const { user } = useRoleNavigation(); // Sử dụng custom hook
 
   const handleLogoClick = () => {
     navigate(PATH.HOME);
