@@ -465,34 +465,34 @@ const HomeLayout = () => {
               <div>
                 <h3 className="text-white mb-3 md:mb-6 text-sm font-semibold">GIỚI THIỆU</h3>
                 <ul>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/ve-chung-toi"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Về chúng tôi
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/thoa-thuan-su-dung"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Thoả thuận sử dụng
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/quy-che-hoat-dong"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Quy chế hoạt động
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/chinh-sach-bao-mat"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Chính sách bảo mật
                     </Link>
@@ -504,42 +504,42 @@ const HomeLayout = () => {
               <div>
                 <h3 className="text-white mb-3 md:mb-6 text-sm font-semibold">GÓC ĐIỆN ẢNH</h3>
                 <ul>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/dien-anh"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Thể loại phim
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/binh-luan-phim"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Bình luận phim
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/movie-blog"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Blog điện ảnh
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/phim-hay"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Phim hay tháng
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/phim-imax"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Phim IMAX
                     </Link>
@@ -551,44 +551,44 @@ const HomeLayout = () => {
               <div>
                 <h3 className="text-white mb-3 md:mb-6 text-sm font-semibold">HỖ TRỢ</h3>
                 <ul>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/gop-y"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Góp ý
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/sale-and-service"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Sale & Services
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/rap-gia-ve"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Rạp / Giá vé
                     </Link>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <a
                       href="https://tuyendung-daotao.galaxystudio.vn/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       Tuyển dụng
                     </a>
                   </li>
-                  <li className="hover:text-[#FD841F] transition-all duration-300">
+                  <li>
                     <Link
                       to="/hoi-dap"
-                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300 block"
+                      className="leading-10 text-gray-300 text-sm hover:text-[#FD841F] transition-all duration-300"
                     >
                       FAQ
                     </Link>
