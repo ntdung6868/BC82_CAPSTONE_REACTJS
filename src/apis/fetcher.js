@@ -15,7 +15,22 @@ fetcher.interceptors.request.use((config) => {
   // console.log("🚀 ~ config:", config);
   const user = localStorage.getItem("user");
   const token = user ? JSON.parse(user).accessToken : null;
-  store.dispatch(showLoading());
+
+  // Tạo flag để track request completion
+  config.metadata = {
+    startTime: new Date().getTime(),
+    completed: false,
+    loadingShown: false,
+  };
+
+  // Đặt timeout để hiển thị loading sau 300ms nếu request chưa hoàn thành
+  config.metadata.timeoutId = setTimeout(() => {
+    if (!config.metadata.completed) {
+      store.dispatch(showLoading());
+      config.metadata.loadingShown = true;
+    }
+  }, 300);
+
   return {
     ...config,
     headers: {
@@ -28,11 +43,29 @@ fetcher.interceptors.request.use((config) => {
 // Response interceptor
 fetcher.interceptors.response.use(
   (response) => {
-    store.dispatch(hideLoading());
+    // Đánh dấu request đã hoàn thành
+    if (response.config.metadata) {
+      response.config.metadata.completed = true;
+      clearTimeout(response.config.metadata.timeoutId);
+
+      // Chỉ hide loading nếu đã show loading
+      if (response.config.metadata.loadingShown) {
+        store.dispatch(hideLoading());
+      }
+    }
     return response;
   },
   (error) => {
-    store.dispatch(hideLoading());
+    // Đánh dấu request đã hoàn thành (với lỗi)
+    if (error.config?.metadata) {
+      error.config.metadata.completed = true;
+      clearTimeout(error.config.metadata.timeoutId);
+
+      // Chỉ hide loading nếu đã show loading
+      if (error.config.metadata.loadingShown) {
+        store.dispatch(hideLoading());
+      }
+    }
     return Promise.reject(error);
   }
 );

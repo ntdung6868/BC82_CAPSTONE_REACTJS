@@ -60,6 +60,10 @@ const useRouterElements = () => {
           element: <MovieManagement />,
         },
         {
+          path: `${PATH.MOVIE_MANAGEMENT}/page/:page`, // Thêm route cho phân trang
+          element: <MovieManagement />,
+        },
+        {
           path: PATH.USER_MANAGEMENT,
           element: <UserManagement />,
         },
