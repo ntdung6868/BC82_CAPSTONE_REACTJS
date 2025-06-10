@@ -1,35 +1,52 @@
 import { Button } from "@/components/ui/button";
 import { PATH } from "@/routes/path";
-import {
-  Facebook,
-  Instagram,
-  Mail,
-  Phone,
-  Youtube,
-  CircleCheckIcon,
-  CircleHelpIcon,
-  CircleIcon,
-  MenuIcon,
-  ChevronDown,
-} from "lucide-react";
-import React, { useState } from "react";
+import { Facebook, Instagram, Mail, Phone, Youtube, MenuIcon, ChevronDown } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import logo from "/img/logo.png";
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { NavUser } from "@/components/ui/nav-user";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/store/slices/user";
 
 const HomeLayout = () => {
   const navigate = useNavigate();
   const [openSection, setOpenSection] = useState(null);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user); // Lấy user từ store
+
+  useEffect(() => {
+    // Khôi phục user từ localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        dispatch(setUser(parsedUser));
+      } catch (error) {
+        console.error("Error parsing user from localStorage:", error);
+        localStorage.removeItem("user");
+      }
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    // Điều hướng dựa trên vai trò của user
+    if (user) {
+      if (user.maLoaiNguoiDung === "ROLE.ADMIN") {
+        navigate("/admin");
+      } else if (user.maLoaiNguoiDung === "ROLE.USER") {
+        navigate("/");
+      }
+    }
+  }, [user, navigate]); // Chạy lại khi user thay đổi
 
   const handleLogoClick = () => {
     navigate(PATH.HOME);
@@ -256,15 +273,18 @@ const HomeLayout = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-4">
-              <Button variant="outline" className="text-sm cursor-pointer" onClick={handleLogin}>
-                Đăng nhập
-              </Button>
-              <Button className="text-sm cursor-pointer" onClick={handleRegister}>
-                Đăng ký
-              </Button>
+              {user ? (
+                <NavUser user={user} />
+              ) : (
+                <>
+                  <Button variant="outline" onClick={handleLogin}>
+                    Đăng nhập
+                  </Button>
+                  <Button onClick={handleRegister}>Đăng ký</Button>
+                </>
+              )}
             </div>
             {/* Mobile Navigation */}
             <div className="flex items-center gap-4 lg:hidden ">
