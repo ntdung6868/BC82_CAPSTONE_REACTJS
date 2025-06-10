@@ -36,14 +36,14 @@ const HomeLayout = () => {
   return (
     <div className="flex flex-col h-screen">
       <header className="w-screen border-2 border-b-gray-200 flex items-center">
-        <div className="container w-7/10 h-[60px] lg:h-[100px] mx-auto flex items-center justify-between">
+        <div className="container h-[60px] lg:h-[100px] mx-auto flex items-center justify-between px-4 w-full xl:w-15/20">
           <img
             src={logo}
             alt="DalaxyCinema"
-            className="w-[77px] lg:w-[115px] p-3 cursor-pointer"
+            className="w-[77px] lg:w-[115px] cursor-pointer"
             onClick={handleLogoClick}
           />
-          <div className="hidden lg:block z-10">
+          <div className="hidden xl:block z-10">
             <NavigationMenu viewport={false}>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -260,12 +260,14 @@ const HomeLayout = () => {
                   <Button variant="outline" onClick={handleLogin}>
                     Đăng nhập
                   </Button>
-                  <Button onClick={handleRegister}>Đăng ký</Button>
+                  <Button onClick={handleRegister} className="hidden md:block">
+                    Đăng ký
+                  </Button>
                 </>
               )}
             </div>
             {/* Mobile Navigation */}
-            <div className="flex items-center gap-4 lg:hidden ">
+            <div className="flex items-center gap-4 xl:hidden ">
               <Sheet>
                 <SheetTrigger>
                   <MenuIcon className="w-6 h-6" />
