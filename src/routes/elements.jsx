@@ -67,6 +67,10 @@ const useRouterElements = () => {
           path: PATH.USER_MANAGEMENT,
           element: <UserManagement />,
         },
+        {
+          path: `${PATH.USER_MANAGEMENT}/page/:page`, // Thêm route cho phân trang
+          element: <UserManagement />,
+        },
       ],
     },
     {
