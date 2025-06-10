@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="w-full pt-4 pb-8 lg:pt-6 lg:pb-12">
+      <div className="w-full pt-2 pb-4 lg:pt-4 lg:pb-8">
         <Carousel />
       </div>
       <div className="container mx-auto px-4 sm:px-[45px] md:px-4 lg:max-w-4xl xl:max-w-screen-xl">
