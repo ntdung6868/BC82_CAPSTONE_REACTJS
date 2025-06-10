@@ -29,13 +29,11 @@ const Carousel = () => {
           .swiper-button-next::after {
             font-size: 28px !important;
             color: #666 !important;
-          }
-            
-        `}
+          }`}
       </style>
       <Swiper
         slidesPerView={1}
-        spaceBetween={45}
+        spaceBetween={30}
         centeredSlides={true}
         loop={true}
         speed={1600}
@@ -49,7 +47,7 @@ const Carousel = () => {
         }}
         navigation={true}
         modules={[Pagination, Navigation, Autoplay]}
-        className="mySwiper w-15/20"
+        className="mySwiper w-full max-w-4/5 shadow-lg"
       >
         {banners.map((banner, index) => (
           <SwiperSlide key={index}>
