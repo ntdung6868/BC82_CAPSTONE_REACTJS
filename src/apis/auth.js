@@ -1,6 +1,6 @@
 import fetcher from "./fetcher";
 
-const loginAuthApi = async (data) => {
+export const loginAuthApi = async (data) => {
   try {
     const response = await fetcher.post("/QuanLyNguoiDung/DangNhap", data);
     // console.log("Login response:", response.data);
@@ -11,4 +11,13 @@ const loginAuthApi = async (data) => {
   }
 };
 
-export default loginAuthApi;
+export const registerAuthApi = async (data) => {
+  try {
+    const response = await fetcher.post("/QuanLyNguoiDung/DangKy", data);
+    // console.log("Login response:", response.data);
+    return response.data.content;
+  } catch (error) {
+    // console.error("Error during login:", error);
+    throw error;
+  }
+};

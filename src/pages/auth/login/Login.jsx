@@ -1,4 +1,4 @@
-import loginAuthApi from "@/apis/auth";
+import { loginAuthApi } from "@/apis/auth";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -76,7 +76,7 @@ const Login = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md">
       <CardHeader className="px-4 sm:px-6">
         <CardTitle className="text-lg sm:text-xl">Đăng nhập</CardTitle>
         <CardDescription className={` ${error ? "text-red-500" : ""}`}>
@@ -89,7 +89,7 @@ const Login = () => {
         <form>
           <div className="flex flex-col gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="email" className="text-sm sm:text-base">
+              <Label htmlFor="taiKhoan" className="text-sm sm:text-base">
                 Tài khoản
               </Label>
               <Input
@@ -104,7 +104,7 @@ const Login = () => {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password" className="text-sm sm:text-base">
+                <Label htmlFor="matKhau" className="text-sm sm:text-base">
                   Mật khẩu
                 </Label>
                 <a href="#" className="ml-auto text-xs sm:text-sm underline-offset-4 hover:underline">
