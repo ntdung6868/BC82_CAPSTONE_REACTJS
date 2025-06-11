@@ -3,12 +3,19 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Film, Popcorn, Ticket, Camera, Star } from "lucide-react";
 import logo from "/img/logo.png";
 import { PATH } from "@/routes/path";
+import { useRoleNavigation } from "@/hooks/useRoleNavigation";
 
 const AuthLayout = () => {
   const navigate = useNavigate();
+  const { user } = useRoleNavigation(); // Sử dụng custom hook
+
   const handleLogoClick = () => {
     navigate(PATH.HOME);
   };
+
+  if (user) {
+    navigate(PATH.HOME);
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-red-900 to-black relative overflow-hidden">
@@ -67,7 +74,6 @@ const AuthLayout = () => {
           <div className="w-full max-w-md">
             {/* Glass Effect Container */}
             <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-8 shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl"></div>
               <div className="z-10 flex flex-col items-center justify-center">
                 <Outlet />
               </div>
