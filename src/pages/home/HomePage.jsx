@@ -15,7 +15,7 @@ const HomePage = () => {
       <div className="w-full pt-2 pb-4 lg:pt-4 lg:pb-8">
         <Carousel />
       </div>
-      <div className="container mx-auto px-4 sm:px-[45px] md:px-4 lg:max-w-4xl xl:max-w-screen-xl">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
         <div className="w-full pt-6 pb-12 px-4">
           <MovieFilter activeFilter={activeFilter} onFilterChange={handleFilterChange} />
           <MovieList filterId={activeFilter} />

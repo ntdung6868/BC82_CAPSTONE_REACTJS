@@ -35,7 +35,7 @@ const HomeLayout = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="w-screen flex items-center">
+      <header className="w-full flex items-center">
         <div className="container h-[60px] lg:h-[100px] mx-auto flex items-center justify-between px-4 w-full xl:w-15/20">
           <img
             src={logo}
