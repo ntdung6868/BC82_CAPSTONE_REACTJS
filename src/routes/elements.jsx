@@ -12,6 +12,7 @@ import UserManagement from "@/pages/admin/user-management/UserManagement";
 import Dashboard from "@/pages/admin/dashboard/Dashboard";
 import { useRoutes } from "react-router-dom";
 import NotFound from "@/pages/not-found/NotFound";
+import ShowtimeManagement from "@/pages/admin/showtime-management/ShowtimeManagement";
 
 const useRouterElements = () => {
   const elements = useRoutes([
@@ -70,6 +71,10 @@ const useRouterElements = () => {
         {
           path: `${PATH.USER_MANAGEMENT}/page/:page`, // Thêm route cho phân trang
           element: <UserManagement />,
+        },
+        {
+          path: `${PATH.SHOWTIME_MANAGEMENT}/:idFilm`,
+          element: <ShowtimeManagement />,
         },
       ],
     },

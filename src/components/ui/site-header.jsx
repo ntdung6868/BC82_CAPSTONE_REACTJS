@@ -5,11 +5,16 @@ import { SidebarTrigger } from "./sidebar";
 import { PATH } from "@/routes/path";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { NavUser } from "./nav-user";
+import { useSelector } from "react-redux";
 
 export function SiteHeader() {
   const { pathname } = useLocation();
+  const user = useSelector((state) => state.user); // Lấy user từ store
 
   const renderLabel = () => {
+    if (pathname.startsWith(PATH.SHOWTIME_MANAGEMENT)) {
+      return "Showtime Management";
+    }
     switch (pathname) {
       case PATH.DASHBOARD:
         return "Dashboard Movie";
@@ -17,6 +22,8 @@ export function SiteHeader() {
         return "User Management";
       case PATH.MOVIE_MANAGEMENT:
         return "Movie Management";
+      case `PATH.SHOWTIME_MANAGEMENT`:
+        return "Showtime Management";
       default:
         return "Dashboard Movie";
     }
@@ -28,14 +35,8 @@ export function SiteHeader() {
         <SidebarTrigger className="-ml-1" />
         <Separator orientation="vertical" className="mx-2 data-[orientation=vertical]:h-4" />
         <h1 className="text-base font-medium">{renderLabel()}</h1>
-        <div className="ml-auto flex items-center gap-2 md:hidden">
-          <NavUser
-            user={{
-              name: "shadcn",
-              email: "m@example.com",
-              avatar: "https://github.com/shadcn.png",
-            }}
-          />
+        <div className="ml-auto flex items-center gap-2">
+          <NavUser user={user} />
         </div>
       </div>
     </header>
