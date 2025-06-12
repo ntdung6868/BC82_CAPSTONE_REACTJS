@@ -15,6 +15,7 @@ fetcher.interceptors.request.use((config) => {
   // console.log("🚀 ~ config:", config);
   const user = localStorage.getItem("user");
   const token = user ? JSON.parse(user).accessToken : null;
+  console.log("🚀 ~ token:", token);
 
   // Tạo flag để track request completion
   config.metadata = {

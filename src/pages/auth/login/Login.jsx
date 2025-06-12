@@ -100,7 +100,9 @@ const Login = () => {
                 required
                 {...register("taiKhoan")}
               />
-              <span className="text-red-500 text-xs sm:text-sm pl-0.5">{errors.taiKhoan?.message}</span>
+              {errors.taiKhoan && (
+                <span className="text-red-500 text-xs sm:text-sm pl-0.5">{errors.taiKhoan?.message}</span>
+              )}
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
@@ -120,17 +122,19 @@ const Login = () => {
                   required
                   {...register("matKhau")}
                 />
-                <span className="text-red-500 text-xs sm:text-sm pl-0.5">{errors.matKhau?.message}</span>
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
-                  className="absolute right-0 top-0"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
                   onClick={() => setPasswordVisibility(!passwordVisibility)}
                 >
                   {passwordVisibility ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
                 </Button>
               </div>
+              {errors.matKhau && (
+                <span className="text-red-500 text-xs sm:text-sm pl-0.5">{errors.matKhau?.message}</span>
+              )}
             </div>
           </div>
         </form>
