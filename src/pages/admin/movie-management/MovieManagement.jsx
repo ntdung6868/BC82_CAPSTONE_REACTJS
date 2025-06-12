@@ -19,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import ToastNotification from "@/components/ui/toast-noti/ToastNotification";
 import { cn } from "@/lib/utils";
-import { IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
+import { IconCalendar, IconEdit, IconEye, IconTrash } from "@tabler/icons-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { CalendarIcon, ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
@@ -109,7 +109,7 @@ const MovieManagement = () => {
       return addMovieApi(formData);
     },
     onSuccess: (response) => {
-      console.log("Movie added successfully:", response);
+      // console.log("Movie added successfully:", response);
       setToast({
         type: "success",
         message: "Thêm phim thành công!",
@@ -300,6 +300,13 @@ const MovieManagement = () => {
                     disabled={isDeleting}
                   >
                     <IconTrash className="size-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate(`/admin/films/showtime/${row.original.maPhim}`)}
+                  >
+                    <IconCalendar className="size-4" />
                   </Button>
                 </div>
               ),

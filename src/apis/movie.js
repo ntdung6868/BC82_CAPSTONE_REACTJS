@@ -43,3 +43,13 @@ export const deleteMovieApi = async (maPhim) => {
     throw error;
   }
 };
+
+export const infoMovieApi = async (maPhim) => {
+  try {
+    const response = await fetcher.get(`/QuanLyPhim/LayThongTinPhim?MaPhim=${maPhim}`);
+    return response.data.content;
+  } catch (error) {
+    console.error("Error fetching movie info:", error);
+    throw error;
+  }
+};
