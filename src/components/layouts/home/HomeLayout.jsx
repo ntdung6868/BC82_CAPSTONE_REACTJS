@@ -4,6 +4,7 @@ import { Facebook, Instagram, Mail, Phone, Youtube, MenuIcon, ChevronDown } from
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import logo from "/img/logo.png";
+import btnTicket from "/img/btn-ticket.webp";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -43,11 +44,11 @@ const HomeLayout = () => {
             className="w-[77px] lg:w-[115px] cursor-pointer"
             onClick={handleLogoClick}
           />
-          <div className="hidden xl:block z-10">
+          <div className="hidden xl:block z-10 ml-10">
             <NavigationMenu viewport={false}>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Phim</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="px-3">Phim</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-4">
                       <li>
@@ -62,7 +63,7 @@ const HomeLayout = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Sản Phẩm</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="px-3">Sản Phẩm</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-4">
                       <li>
@@ -77,7 +78,7 @@ const HomeLayout = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Góc Điên Ảnh</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="px-3">Góc Điên Ảnh</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-4">
                       <li>
@@ -101,7 +102,7 @@ const HomeLayout = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Sự Kiện</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="px-3">Sự Kiện</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[200px] gap-4">
                       <li>
@@ -122,7 +123,7 @@ const HomeLayout = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Rạp/Giá Vé</NavigationMenuTrigger>
+                  <NavigationMenuTrigger className="px-3">Rạp/Giá Vé</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[300px] gap-2 p-2 max-h-[325px] overflow-y-auto -mr-2">
                       <li>
@@ -251,13 +252,19 @@ const HomeLayout = () => {
               </NavigationMenuList>
             </NavigationMenu>
           </div>
-          <div className="flex items-center gap-4 pl-10">
-            <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 lg:gap-4 pl-0 lg:pl-5">
+            <div className="flex items-center gap-0 sm:gap-4">
+              <img
+                src={btnTicket}
+                alt="Ticket"
+                className="w-[80px] lg:w-[112px] cursor-pointer mx-2 sm:mx-10"
+                onClick={() => navigate(PATH.TICKET)}
+              />
               {user ? (
                 <NavUser user={user} />
               ) : (
                 <>
-                  <Button variant="outline" onClick={handleLogin}>
+                  <Button variant="outline" onClick={handleLogin} className="px-2 py-1">
                     Đăng nhập
                   </Button>
                   <Button onClick={handleRegister} className="hidden md:block">
@@ -435,7 +442,7 @@ const HomeLayout = () => {
       <footer id="footer" className="bg-[#333333] text-gray-400">
         <div className="container mx-auto px-4 sm:px-[45px] md:px-4 lg:max-w-4xl xl:max-w-screen-xl">
           <div className="py-8">
-            <div className="grid grid-cols-2 gap-y-4 md:gap-y-0 sm:grid-cols-2 lg:grid-cols-4 ">
+            <div className="grid grid-cols-2 gap-y-4 gap-x-4 md:gap-y-2 md:gap-x-2 sm:grid-cols-2 lg:grid-cols-4 ">
               {/* Giới thiệu Section */}
               <div>
                 <h3 className="text-white mb-3 md:mb-6 text-sm font-semibold">GIỚI THIỆU</h3>
