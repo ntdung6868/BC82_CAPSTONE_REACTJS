@@ -51,7 +51,7 @@ const NotFound = () => {
           </Link>
 
           <Link
-            to="/movies"
+            to={PATH.TICKET}
             className="relative inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-semibold py-4 px-8 rounded-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl shadow-yellow-500/50"
           >
             <Ticket className="w-5 h-5" />

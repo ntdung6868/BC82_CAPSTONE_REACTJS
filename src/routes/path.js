@@ -1,5 +1,6 @@
 export const PATH = {
   HOME: "/",
+  TICKET: "/booking",
   MOVIE_DETAILS: "/movie-details",
   LOGIN: "/auth/login",
   REGISTER: "/auth/register",
