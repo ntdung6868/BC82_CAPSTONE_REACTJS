@@ -29,3 +29,13 @@ export const createShowtimeApi = async (data) => {
     throw error;
   }
 };
+
+export const listShowtimeCinemaSystemApi = async (data) => {
+  try {
+    const response = await fetcher.get("/QuanLyRap/LayThongTinLichChieuHeThongRap", { params: data });
+    return response.data.content;
+  } catch (error) {
+    console.error("Error fetching showtime:", error);
+    throw error;
+  }
+};

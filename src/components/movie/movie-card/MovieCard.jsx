@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
       <div className="w-full aspect-[2/3] flex flex-col gap-3">
         <div
           className="relative w-full h-full rounded-lg overflow-hidden group"
-          onClick={() => navigate(`/detail-movie/${movie.maPhim}`)}
+          onClick={() => navigate(`/movie-details/${movie.maPhim}`)}
         >
           <div className="absolute top-0 left-0 w-full h-full cursor-pointer opacity-0 flex flex-col items-center justify-center gap-4 group-hover:opacity-100 bg-[rgba(0,0,0,0.5)] transition-all duration-300">
             <Button
@@ -22,7 +22,7 @@ const MovieCard = ({ movie }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 // console.log("click mua ve");
-                navigate(`/detail-movie/${movie.maPhim}`);
+                navigate(`/movie-details/${movie.maPhim}`);
               }}
             >
               <TicketIcon />
