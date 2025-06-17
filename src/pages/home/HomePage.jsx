@@ -1,3 +1,4 @@
+import CinemaInfo from "@/components/cinema-info/CinemaInfo";
 import MovieFilter from "@/components/movie/movie-filter/MovieFilter";
 import MovieList from "@/components/movie/movie-list/MovieList";
 import Carousel from "@/components/ui/Carousel";
@@ -19,6 +20,7 @@ const HomePage = () => {
         <div className="w-full pt-6 pb-12 px-4">
           <MovieFilter activeFilter={activeFilter} onFilterChange={handleFilterChange} />
           <MovieList filterId={activeFilter} />
+          <CinemaInfo />
         </div>
       </div>
     </>
