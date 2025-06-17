@@ -48,7 +48,7 @@ const ShowtimeManagement = () => {
     }
   }, [toast]);
 
-  const { data: idFilmData, error } = useQuery({
+  const { data: filmDataById, error } = useQuery({
     queryFn: () => infoMovieApi(idFilm),
     queryKey: ["infoMovie", idFilm],
   });
@@ -91,8 +91,8 @@ const ShowtimeManagement = () => {
   //   console.log("maHeThongRap:", maHeThongRap);
   //   console.log("maCumRap:", maCumRap);
   //   console.log("rapData:", rapData);
-  //   console.log("idFilmData:", idFilmData);
-  // }, [maHeThongRap, maCumRap, rapData, idFilmData]);
+  //   console.log("filmDataById:", filmDataById);
+  // }, [maHeThongRap, maCumRap, rapData, filmDataById]);
 
   const { mutate: handleCreateShowtime, isPending } = useMutation({
     mutationFn: (data) => createShowtimeApi(data),
@@ -134,13 +134,13 @@ const ShowtimeManagement = () => {
       <div className="flex lg:flex-row flex-col gap-8">
         <div className="flex gap-2 bg-gray-50 pr-4 rounded-md lg:w-1/2 w-full ">
           <img
-            src={idFilmData?.hinhAnh}
-            alt={idFilmData?.tenPhim}
+            src={filmDataById?.hinhAnh}
+            alt={filmDataById?.tenPhim}
             className="w-1/2 object-cover rounded-tl-md rounded-bl-md"
           />
           <div className="flex flex-col gap-5 w-full py-10 px-2">
-            <h2 className="text-2xl font-bold">{idFilmData?.tenPhim}</h2>
-            <p className="text-sm max-h-[500px] overflow-y-auto">{idFilmData?.moTa}</p>
+            <h2 className="text-2xl font-bold">{filmDataById?.tenPhim}</h2>
+            <p className="text-sm max-h-[500px] overflow-y-auto">{filmDataById?.moTa}</p>
           </div>
         </div>
         <form
