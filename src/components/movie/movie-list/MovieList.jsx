@@ -38,8 +38,8 @@ const MovieList = ({ filterId }) => {
   };
 
   return (
-    <div className="space-y-6 flex flex-col items-center mb-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+    <div className="space-y-6 flex flex-col items-center mb-12">
+      <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
         {displayedMovies.length > 0 ? (
           displayedMovies.map((movie) => <MovieCard key={movie.maPhim} movie={movie} />)
         ) : (
