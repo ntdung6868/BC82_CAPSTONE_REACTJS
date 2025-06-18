@@ -2,22 +2,14 @@ import { listCinemaApi, listCinemaSystemApi, listShowtimeCinemaSystemApi } from 
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useShowtimes } from "@/hooks/useShowtimes";
 
 const CinemaInfo = () => {
   const [selectedCinemaSystem, setSelectedCinemaSystem] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState(null);
   const [maHeThongRap, setMaHeThongRap] = useState(null);
   const [maCumRap, setMaCumRap] = useState(null);
-  const [showtimes, setShowtimes] = useState(null);
   const navigate = useNavigate();
-
-  const getShowtimesByCumRap = (listShowtime, maCumRap) => {
-    if (!listShowtime || !listShowtime[0] || !listShowtime[0].lstCumRap || !maCumRap) {
-      return null;
-    }
-    const cumRap = listShowtime[0].lstCumRap.find((item) => item.maCumRap === maCumRap);
-    return cumRap ? cumRap.danhSachPhim : null;
-  };
 
   const { data: cinemaSystem } = useQuery({
     queryKey: ["cinemaInfo"],
@@ -39,12 +31,9 @@ const CinemaInfo = () => {
     enabled: !!maHeThongRap,
   });
   //   console.log("🚀 ~ listShowtime ~ listShowtime:", listShowtime);
-  useEffect(() => {
-    if (listShowtime && maCumRap) {
-      const showtimes = getShowtimesByCumRap(listShowtime, maCumRap);
-      setShowtimes(showtimes);
-    }
-  }, [listShowtime, maCumRap]);
+
+  // Sử dụng custom hook để lấy showtimes (không cần movieId vì hiển thị tất cả phim)
+  const { showtimes } = useShowtimes(listShowtime, maCumRap);
 
   useEffect(() => {
     if (cinemaSystem && cinemaSystem.length > 0) {

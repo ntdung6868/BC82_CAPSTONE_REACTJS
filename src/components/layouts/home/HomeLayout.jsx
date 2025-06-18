@@ -22,6 +22,44 @@ const HomeLayout = () => {
   const [openSection, setOpenSection] = useState(null);
   const { user } = useRoleNavigation(); // Sử dụng custom hook
 
+  // Hide scrollbar globally but keep scroll functionality
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.textContent = `
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      body::-webkit-scrollbar {
+        display: none;
+      }
+      
+      html::-webkit-scrollbar {
+        display: none;
+      }
+      
+      /* Hide scrollbar for IE, Edge and Firefox */
+      body {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      html {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      
+      /* Ensure smooth scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+    `;
+    document.head.appendChild(style);
+
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   const handleLogoClick = () => {
     navigate(PATH.HOME);
   };
