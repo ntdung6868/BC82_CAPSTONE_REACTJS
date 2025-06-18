@@ -13,6 +13,7 @@ import Dashboard from "@/pages/admin/dashboard/Dashboard";
 import { useRoutes } from "react-router-dom";
 import NotFound from "@/pages/not-found/NotFound";
 import ShowtimeManagement from "@/pages/admin/showtime-management/ShowtimeManagement";
+import BookingTicketsMovie from "@/pages/booking-tickets-movie/BookingTicketsMovie";
 
 const useRouterElements = () => {
   const elements = useRoutes([
@@ -28,6 +29,10 @@ const useRouterElements = () => {
           path: `${PATH.MOVIE_DETAILS}/:id`,
           element: <MovieDetails />,
         },
+        {
+          path: `${PATH.BOOKING_TICKETS_MOVIE}/:id`,
+          element: <BookingTicketsMovie />,
+        }, 
       ],
     },
     {

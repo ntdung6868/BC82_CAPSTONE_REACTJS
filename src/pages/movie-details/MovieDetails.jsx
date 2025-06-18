@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BlurLeft from "/img/blur-left.png";
 import BlurRight from "/img/blur-right.png";
 import { CalendarIcon, ClockIcon, Play, StarIcon } from "lucide-react";
 import { infoMovieApi } from "@/apis/movie";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import MovieTrailer from "@/components/movie/movie-trailer/MovieTrailer";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { listCinemaApi, listCinemaSystemApi, listShowtimeCinemaSystemApi } from "@/apis/cinema-system";
+import { useShowtimes } from "@/hooks/useShowtimes";
+import { Button } from "@/components/ui/button";
+import { PATH } from "@/routes/path";
 
 const MovieDetails = () => {
   const [showTrailer, setShowTrailer] = useState(false);
@@ -18,6 +22,11 @@ const MovieDetails = () => {
     return `${today.getDate().toString().padStart(2, "0")}/${(today.getMonth() + 1).toString().padStart(2, "0")}`;
   };
   const [selectedDate, setSelectedDate] = useState(getTodayDate());
+  const [maHeThongRap, setMaHeThongRap] = useState("");
+  // console.log("🚀 ~ MovieDetails ~ maHeThongRap:", maHeThongRap);
+  const [maCumRap, setMaCumRap] = useState("");
+  // console.log("🚀 ~ MovieDetails ~ maCumRap:", maCumRap);
+  const navigate = useNavigate();
 
   const generateDates = () => {
     const dates = [];
@@ -55,12 +64,51 @@ const MovieDetails = () => {
   });
   // console.log("🚀 ~ MovieDetails ~ filmDataById:", filmDataById);
 
+  const { data: cinemaSystem } = useQuery({
+    queryFn: () => listCinemaSystemApi(),
+    queryKey: ["cinemaSystem"],
+  });
+  // console.log("🚀 ~ MovieDetails ~ cinemaSystem:", cinemaSystem);
+
+  const { data: cinema } = useQuery({
+    queryFn: () => listCinemaApi(maHeThongRap),
+    queryKey: ["cinema", maHeThongRap],
+    enabled: !!maHeThongRap,
+  });
+
+  useEffect(() => {
+    if (cinemaSystem && cinemaSystem.length > 0 && !maHeThongRap) {
+      setMaHeThongRap(cinemaSystem[0].maHeThongRap);
+      setMaCumRap("all");
+    }
+  }, [cinemaSystem, maHeThongRap]);
+
+  // Reset cụm rạp về "all" khi hệ thống rạp thay đổi
+  useEffect(() => {
+    if (maHeThongRap) {
+      setMaCumRap("all");
+    }
+  }, [maHeThongRap]);
+
+  // lấy data của GP01
+  const { data: listShowtime } = useQuery({
+    queryKey: ["listShowtime", { maHeThongRap: maHeThongRap, maNhom: "GP01" }],
+    queryFn: () => listShowtimeCinemaSystemApi({ maHeThongRap: maHeThongRap, maNhom: "GP01" }),
+    enabled: !!maHeThongRap,
+  });
+  // console.log("🚀 ~ listShowtime ~ listShowtime:", listShowtime);
+
+  // Sử dụng custom hook để lấy showtimes
+  const movieId = parseInt(id);
+  const { showtimes, hasData, isEmpty } = useShowtimes(listShowtime, maCumRap, movieId);
+  // console.log("🚀 ~ MovieDetails ~ showtimes:", showtimes);
+
   return (
     <>
       {/* Hero Banner Section */}
       <div className="relative bg-black flex justify-center w-full min-h-[250px] sm:min-h-[350px] lg:min-h-[500px]">
         <div className="absolute w-full h-full z-10 bg-black/30"></div>
-        <div className="relative h-full w-full max-w-7xl">
+        <div className="relative h-full">
           {/* Left Blur - Desktop only */}
           <div className="absolute top-0 left-0 z-20 hidden lg:block">
             <img alt="Blur Left" className="w-auto h-[250px] sm:h-[350px] lg:h-[500px] object-cover" src={BlurLeft} />
@@ -96,7 +144,7 @@ const MovieDetails = () => {
           <div className="flex-shrink-0 mx-auto lg:mx-0 lg:-mt-20 z-50">
             <img
               alt={filmDataById?.tenPhim}
-              className="w-48 h-64 sm:w-56 sm:h-72 lg:w-64 lg:h-80 object-cover rounded-lg border-2 border-white shadow-2xl"
+              className="w-48 h-64 sm:w-56 sm:h-72 lg:w-70 lg:h-100 object-cover rounded-lg border-2 border-white shadow-2xl"
               src={filmDataById?.hinhAnh}
             />
           </div>
@@ -193,63 +241,107 @@ const MovieDetails = () => {
                 ))}
               </div>
             </div>
-  
+
             {/* Location Filters */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-               {/* Hệ thống rạp */}
-            <div className="space-y-1">
-              <Label className="text-sm font-medium">
-                Hệ thống rạp
-              </Label>
-              <Select onValueChange={(value) => setMaHeThongRap(value)}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Chọn hệ thống rạp" />
-                </SelectTrigger>
-                <SelectContent>
-                  {/* {cinemaSystem?.map((item) => (
-                    <SelectItem key={item.maHeThongRap} value={item.maHeThongRap}>
-                      {item.tenHeThongRap}
-                    </SelectItem>
-                  ))} */}
-                  <SelectItem value="1">Hệ thống rạp 1</SelectItem>
-                  <SelectItem value="2">Hệ thống rạp 2</SelectItem>
-                  <SelectItem value="3">Hệ thống rạp 3</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              {/* Hệ thống rạp */}
+              <div className="space-y-1">
+                <Label className="text-sm font-medium">Hệ thống rạp</Label>
+                <Select onValueChange={(value) => setMaHeThongRap(value)} value={maHeThongRap}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Chọn hệ thống rạp" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cinemaSystem?.map((item) => (
+                      <SelectItem key={item.maHeThongRap} value={item.maHeThongRap}>
+                        {item.tenHeThongRap}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            {/* Cụm rạp */}
-            <div className="space-y-1">
-              <Label className="text-sm font-medium">
-                Cụm rạp
-              </Label>
-              <Select
-                onValueChange={(value) => {
-                  setMaCumRap(value);
-                }}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Chọn cụm rạp" />
-                </SelectTrigger>
-                <SelectContent>
-                  {/* {cinema?.map((item) => (
-                    <SelectItem key={item.maCumRap} value={item.maCumRap}>
-                      {item.tenCumRap}
+              {/* Cụm rạp */}
+              <div className="space-y-1">
+                <Label className="text-sm font-medium">
+                  Cụm rạp <span className="text-red-500">*</span>
+                </Label>
+                <Select
+                  onValueChange={(value) => {
+                    setMaCumRap(value);
+                  }}
+                  value={maCumRap}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Chọn cụm rạp" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all" active>
+                      Tất cả
                     </SelectItem>
-                  ))} */}
-                  <SelectItem value="1">Cụm rạp 1</SelectItem>
-                  <SelectItem value="2">Cụm rạp 2</SelectItem>
-                  <SelectItem value="3">Cụm rạp 3</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                    {cinema?.map((item) => (
+                      <SelectItem key={item.maCumRap} value={item.maCumRap}>
+                        {item.tenCumRap}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
+          <div className="w-full h-0.5 bg-[#034EA2] mb-4 lg:mb-8"></div>
 
-          {/* Cinema Showtimes Placeholder */}
-          <div className="bg-gray-50 rounded-lg p-6 text-center">
-            <p className="text-gray-500">Thông tin lịch chiếu sẽ được cập nhật sớm</p>
-          </div>
+          {/* Cinema Showtimes */}
+
+          {hasData && showtimes && (
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {showtimes.map((item) => (
+                <div key={item.maPhim} className=" border-b border-gray-200 pb-3">
+                  <div className="flex flex-col gap-2 ">
+                    <h4 className="text-sm font-semibold">{item.tenCumRap}</h4>
+                    <div className="grid 2xl:grid-cols-6 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 items-center">
+                      {item.lstLichChieuTheoPhim &&
+                        item.lstLichChieuTheoPhim.map((scheduleItem) => (
+                          <Button
+                            key={scheduleItem.maLichChieu}
+                            className="text-xs text-gray-500 cursor-pointer"
+                            variant="outline"
+                            onClick={() => navigate(`${PATH.BOOKING_TICKETS_MOVIE}/${scheduleItem.maLichChieu}`)}
+                          >
+                            {`${scheduleItem.ngayChieuGioChieu.split("T")[0]} - ${
+                              scheduleItem.ngayChieuGioChieu.split("T")[1]
+                            }`}
+                          </Button>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* No Data Message */}
+          {isEmpty && (
+            <div className="text-center py-8">
+              <div className="text-gray-500">
+                <svg
+                  className="w-16 h-16 mx-auto mb-4 text-gray-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p className="text-gray-600 font-medium">Không có lịch chiếu</p>
+                <p className="text-sm text-gray-400 mt-1">Vui lòng chọn hệ thống rạp và cụm rạp khác</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {/* Trailer Modal */}
