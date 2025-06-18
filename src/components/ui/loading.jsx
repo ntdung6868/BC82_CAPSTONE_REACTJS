@@ -6,7 +6,7 @@ const Loading = () => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-1000">
       <div className="bg-white/90 dark:bg-gray-800/90 p-8 rounded-2xl shadow-2xl transform transition-all duration-300 scale-100 hover:scale-105">
         <div className="flex flex-col items-center">
           <div className="relative">
