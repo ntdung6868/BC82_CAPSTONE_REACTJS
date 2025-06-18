@@ -46,9 +46,9 @@ const HomeLayout = () => {
         scrollbar-width: none;  /* Firefox */
       }
       
-      /* Ensure smooth scrolling */
+      /* Ensure smooth scrolling for manual scrolling only */
       html {
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
       }
     `;
     document.head.appendChild(style);
@@ -82,7 +82,7 @@ const HomeLayout = () => {
             className="w-[77px] lg:w-[115px] cursor-pointer"
             onClick={handleLogoClick}
           />
-          <div className="hidden xl:block z-10 ml-10">
+          <div className="hidden xl:block z-999 ml-10">
             <NavigationMenu viewport={false}>
               <NavigationMenuList>
                 <NavigationMenuItem>
