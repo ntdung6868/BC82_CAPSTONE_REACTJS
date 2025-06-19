@@ -8,13 +8,10 @@ import { useParams } from "react-router-dom";
 
 const BookingTicketsMovie = () => {
   const { maLichChieu } = useParams();
-  // console.log("🚀 ~ BookingTicketsMovie ~ maLichChieu:", maLichChieu);
   const [selectedSeats, setSelectedSeats] = useState([]);
   console.log("🚀 ~ BookingTicketsMovie ~ selectedSeats:", selectedSeats);
   const [seatsNormal, setSeatsNormal] = useState([]);
-  console.log("🚀 ~ BookingTicketsMovie ~ seatsNormal:", seatsNormal);
   const [seatsVip, setSeatsVip] = useState([]);
-  console.log("🚀 ~ BookingTicketsMovie ~ seatsVip:", seatsVip);
   const [toast, setToast] = useState(null);
 
   const { data: dataPhongVe } = useQuery({
@@ -44,6 +41,56 @@ const BookingTicketsMovie = () => {
     }
   };
 
+  const getSeatViTri = (seat) => {
+    if (seat.stt >= 1 && seat.stt <= 16) {
+      return `A${Number(seat.stt)}`;
+    } else if (seat.stt >= 17 && seat.stt <= 32) {
+      return `B${Number(seat.stt - 16)}`;
+    } else if (seat.stt >= 33 && seat.stt <= 48) {
+      return `C${Number(seat.stt - 32)}`;
+    } else if (seat.stt >= 49 && seat.stt <= 64) {
+      return `D${Number(seat.stt - 48)}`;
+    } else if (seat.stt >= 65 && seat.stt <= 80) {
+      return `E${Number(seat.stt - 64)}`;
+    } else if (seat.stt >= 81 && seat.stt <= 96) {
+      return `F${Number(seat.stt - 80)}`;
+    } else if (seat.stt >= 97 && seat.stt <= 112) {
+      return `G${Number(seat.stt - 96)}`;
+    } else if (seat.stt >= 113 && seat.stt <= 128) {
+      return `H${Number(seat.stt - 112)}`;
+    } else if (seat.stt >= 129 && seat.stt <= 144) {
+      return `I${Number(seat.stt - 128)}`;
+    } else if (seat.stt >= 145 && seat.stt <= 160) {
+      return `J${Number(seat.stt - 144)}`;
+    }
+    return null;
+  };
+
+  const getSeatStt = (seat) => {
+    if (seat.stt >= 1 && seat.stt <= 16) {
+      return Number(seat.stt);
+    } else if (seat.stt >= 17 && seat.stt <= 32) {
+      return Number(seat.stt - 16);
+    } else if (seat.stt >= 33 && seat.stt <= 48) {
+      return Number(seat.stt - 32);
+    } else if (seat.stt >= 49 && seat.stt <= 64) {
+      return Number(seat.stt - 48);
+    } else if (seat.stt >= 65 && seat.stt <= 80) {
+      return Number(seat.stt - 64);
+    } else if (seat.stt >= 81 && seat.stt <= 96) {
+      return Number(seat.stt - 80);
+    } else if (seat.stt >= 97 && seat.stt <= 112) {
+      return Number(seat.stt - 96);
+    } else if (seat.stt >= 113 && seat.stt <= 128) {
+      return Number(seat.stt - 112);
+    } else if (seat.stt >= 129 && seat.stt <= 144) {
+      return Number(seat.stt - 128);
+    } else if (seat.stt >= 145 && seat.stt <= 160) {
+      return Number(seat.stt - 144);
+    }
+    return null;
+  };
+
   const handleSeatClick = (seat) => {
     if (seat.daDat) return; // Không cho phép chọn ghế đã đặt
 
@@ -58,7 +105,7 @@ const BookingTicketsMovie = () => {
           id: `add-seat-${Date.now()}`,
         });
       } else {
-        setSelectedSeats([...selectedSeats, seat]);
+        setSelectedSeats([...selectedSeats, { ...seat, viTriGhe: getSeatViTri(seat)}]);
       }
     }
   };
@@ -136,7 +183,7 @@ const BookingTicketsMovie = () => {
                           title={`Ghế ${seat.tenGhe} - ${seat.daDat ? "Đã đặt" : `${seat.giaVe.toLocaleString()}đ`}`}
                           onClick={() => handleSeatClick(seat)}
                         >
-                          <span className="text-[8px] sm:text-[10px] lg:text-xs leading-none">{seat.tenGhe}</span>
+                          <span className="text-[8px] sm:text-[10px] lg:text-xs leading-none">{getSeatStt(seat)}</span>
                         </Button>
                       ))}
                   </div>
@@ -202,7 +249,7 @@ const BookingTicketsMovie = () => {
                           </p>
                           <div className="flex items-center gap-1 flex-wrap">
                             <span>Ghế:</span>
-                            <span className="font-bold">{seatsNormal.map((seat) => seat.tenGhe).join(", ")}</span>
+                            <span className="font-bold">{seatsNormal.map((seat) => seat.viTriGhe).join(", ")}</span>
                           </div>
                         </div>
                         <div className="ml-2">
@@ -221,7 +268,7 @@ const BookingTicketsMovie = () => {
                           </p>
                           <div className="flex items-center gap-1 flex-wrap">
                             <span>Ghế:</span>
-                            <span className="font-bold">{seatsVip.map((seat) => seat.tenGhe).join(", ")}</span>
+                            <span className="font-bold">{seatsVip.map((seat) => seat.viTriGhe).join(", ")}</span>
                           </div>
                         </div>
                         <div className="ml-2">
