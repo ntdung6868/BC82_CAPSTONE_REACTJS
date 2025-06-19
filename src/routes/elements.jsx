@@ -30,9 +30,9 @@ const useRouterElements = () => {
           element: <MovieDetails />,
         },
         {
-          path: `${PATH.BOOKING_TICKETS_MOVIE}/:id`,
+          path: `${PATH.BOOKING_TICKETS_MOVIE}/:maLichChieu`,
           element: <BookingTicketsMovie />,
-        }, 
+        },
       ],
     },
     {

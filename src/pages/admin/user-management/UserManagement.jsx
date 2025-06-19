@@ -80,7 +80,7 @@ const UserManagement = () => {
     if (toast) {
       const timer = setTimeout(() => {
         setToast(null);
-      }, toast.autoClose || 5000); // Reset sau autoClose
+      }, toast.autoClose || 6000); // Reset sau autoClose
       return () => clearTimeout(timer);
     }
   }, [toast]);

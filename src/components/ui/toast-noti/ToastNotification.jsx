@@ -1,6 +1,5 @@
-import { toast, ToastContainer } from "react-toastify";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Bounce } from "react-toastify";
 import { useEffect } from "react";
 
 const ToastNotification = ({ message, type = "success", autoClose = 5000, position = "top-right", id }) => {
@@ -15,7 +14,6 @@ const ToastNotification = ({ message, type = "success", autoClose = 5000, positi
         draggable: true,
         theme: "colored",
         toastId: id,
-        limit: 2,
       };
 
       switch (type) {
@@ -50,7 +48,6 @@ const ToastNotification = ({ message, type = "success", autoClose = 5000, positi
       pauseOnHover
       theme="colored"
       transition={Bounce}
-      limit={2}
     />
   );
 };
