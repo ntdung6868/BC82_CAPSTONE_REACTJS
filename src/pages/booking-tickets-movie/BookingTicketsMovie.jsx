@@ -1,7 +1,251 @@
-import React from "react";
+import { seatListAndStatusApi } from "@/apis/cinema-system";
+import { Button } from "@/components/ui/button";
+import ToastNotification from "@/components/ui/toast-noti/ToastNotification";
+import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const BookingTicketsMovie = () => {
-  return <div>BookingTicketsMovie</div>;
+  const { maLichChieu } = useParams();
+  // console.log("🚀 ~ BookingTicketsMovie ~ maLichChieu:", maLichChieu);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  console.log("🚀 ~ BookingTicketsMovie ~ selectedSeats:", selectedSeats);
+  const [seatsNormal, setSeatsNormal] = useState([]);
+  console.log("🚀 ~ BookingTicketsMovie ~ seatsNormal:", seatsNormal);
+  const [seatsVip, setSeatsVip] = useState([]);
+  console.log("🚀 ~ BookingTicketsMovie ~ seatsVip:", seatsVip);
+  const [toast, setToast] = useState(null);
+
+  const { data: dataPhongVe } = useQuery({
+    queryKey: ["seatListAndStatus", maLichChieu],
+    queryFn: () => seatListAndStatusApi(maLichChieu),
+    enabled: !!maLichChieu,
+  });
+  // console.log("🚀 ~ BookingTicketsMovie ~ dataPhongVe:", dataPhongVe);
+
+  // Reset toast sau khi hiển thị
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast(null);
+      }, toast.autoClose || 6000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  const getSeatStyle = (seat) => {
+    const isSelected = selectedSeats.find((s) => s.maGhe === seat.maGhe);
+
+    if (seat.daDat) {
+      return "bg-gray-200 text-white ";
+    } else if (isSelected) {
+      return "bg-orange-400 text-white hover:bg-orange-400";
+    }
+  };
+
+  const handleSeatClick = (seat) => {
+    if (seat.daDat) return; // Không cho phép chọn ghế đã đặt
+
+    const isSelected = selectedSeats.find((s) => s.maGhe === seat.maGhe);
+    if (isSelected) {
+      setSelectedSeats(selectedSeats.filter((s) => s.maGhe !== seat.maGhe));
+    } else {
+      if (selectedSeats.length >= 8) {
+        setToast({
+          type: "error",
+          message: "Bạn chỉ được chọn tối đa 8 ghế",
+          id: `add-seat-${Date.now()}`,
+        });
+      } else {
+        setSelectedSeats([...selectedSeats, seat]);
+      }
+    }
+  };
+
+  const totalPrice = selectedSeats.reduce((sum, seat) => sum + seat.giaVe, 0);
+
+  useEffect(() => {
+    setSeatsNormal(selectedSeats.filter((s) => s.loaiGhe === "Thuong"));
+    setSeatsVip(selectedSeats.filter((s) => s.loaiGhe === "Vip"));
+  }, [selectedSeats]);
+
+  return (
+    <>
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-3 gap-10 my-10">
+          <div className="col-span-2">
+            <div className="w-full h-full p-4">
+              <h2 className="text-xl font-bold mb-4">Chọn ghế</h2>
+              {/* Chú thích ghế */}
+              <div className="flex justify-between gap-6 mb-6 p-2">
+                <div className="flex gap-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 bg-gray-200 rounded border"></div>
+                    <span className="text-sm">Ghế đã đặt</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 bg-orange-400 rounded"></div>
+                    <span className="text-sm">Ghế đang chọn</span>
+                  </div>
+                </div>
+                <div className="flex gap-6">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded border"></div>
+                    <span className="text-sm">Ghế thường</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded border-orange-400 border-2"></div>
+                    <span className="text-sm">Ghế vip</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-full h-1 bg-[#ff8455]"></div>
+                <p className="text-sm text-gray-500">Màn hình</p>
+              </div>
+              <div className="flex p-8 justify-center gap-12">
+                {/* Cột chữ cái bên trái */}
+                <div className="flex flex-col gap-2">
+                  {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map((letter) => (
+                    <div key={letter} className="h-10 flex items-center justify-center">
+                      <span className="text-sm font-medium text-gray-600 w-6 text-center">{letter}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-16 gap-2 max-w-4xl">
+                  {dataPhongVe &&
+                    dataPhongVe.danhSachGhe.map((seat) => (
+                      <Button
+                        key={seat.maGhe}
+                        variant="outline"
+                        className={cn(
+                          "w-10 h-10 rounded-md border transition-all duration-200 flex items-center justify-center text-xs font-medium cursor-pointer",
+                          seat.daDat ? "bg-gray-200" : seat.loaiGhe === "Vip" ? "border-orange-400 border-2" : "",
+                          getSeatStyle(seat)
+                        )}
+                        disabled={seat.daDat}
+                        title={`Ghế ${seat.tenGhe} - ${seat.daDat ? "Đã đặt" : `${seat.giaVe.toLocaleString()}đ`}`}
+                        onClick={() => handleSeatClick(seat)}
+                      >
+                        {seat.tenGhe}
+                      </Button>
+                    ))}
+                </div>
+                {/* Cột chữ cái bên phải */}
+                <div className="flex flex-col gap-2">
+                  {["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"].map((letter) => (
+                    <div key={letter} className="h-10 flex items-center justify-center">
+                      <span className="text-sm font-medium text-gray-600 w-6 text-center">{letter}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* Sidebar thông tin đặt vé */}
+          <div className="lg:col-span-1 border-t-6 border-orange-400 rounded-sm">
+            {dataPhongVe && (
+              <div className="bg-white shadow-lg p-6">
+                {/* Thông tin phim */}
+                <div className="mb-6">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="col-span-1">
+                      <img
+                        src={dataPhongVe.thongTinPhim.hinhAnh}
+                        alt={dataPhongVe.thongTinPhim.tenPhim}
+                        className="w-full h-full rounded-md"
+                      />
+                    </div>
+                    <div className="col-span-2 flex flex-col gap-2">
+                      <h4 className="font-bold text-xl mb-2">{dataPhongVe.thongTinPhim.tenPhim}</h4>
+                      <div className="space-y-1 text-sm">
+                        <p>
+                          <span className="font-bold ">{dataPhongVe.thongTinPhim.tenCumRap} - </span>
+                          {dataPhongVe.thongTinPhim.tenRap}
+                        </p>
+                        <p>
+                          Suất chiếu: <span className="font-bold">{dataPhongVe.thongTinPhim.gioChieu}</span>
+                        </p>
+                        <p>
+                          Ngày: <span className="font-bold">{dataPhongVe.thongTinPhim.ngayChieu}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Ghế đã chọn */}
+                {selectedSeats.length > 0 && (
+                  <div className="border-t border-dashed border-gray-600 pt-4 mb-6 text-sm space-y-2">
+                    {seatsNormal.length > 0 && (
+                      <div className="flex justify-between">
+                        <div>
+                          <p className="flex items-center gap-2">
+                            <span className="font-bold">{seatsNormal.length}x</span>
+                            Ghế thường
+                          </p>
+                          <div className="flex items-center gap-1">
+                            <span>Ghế:</span>
+                            <span className="font-bold">{seatsNormal.map((seat) => seat.tenGhe).join(", ")}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-bold">
+                            {seatsNormal.reduce((sum, seat) => sum + seat.giaVe, 0).toLocaleString()}đ
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                    {seatsVip.length > 0 && (
+                     <div className="flex justify-between">
+                        <div>
+                          <p className="flex items-center gap-2">
+                            <span className="font-bold">{seatsVip.length}x</span>
+                            Ghế vip
+                          </p>
+                          <div className="flex items-center gap-1">
+                            <span>Ghế:</span>
+                            <span className="font-bold">{seatsVip.map((seat) => seat.tenGhe).join(", ")}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span className="font-bold">
+                            {seatsVip.reduce((sum, seat) => sum + seat.giaVe, 0).toLocaleString()}đ
+                          </span>
+                        </div>
+                     </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Tổng tiền */}
+                <div className="border-t border-dashed border-gray-600 pt-4 mb-6">
+                  <div className="flex justify-between items-center text-md mb-4">
+                    <span className="font-semibold">Tổng cộng:</span>
+                    <span className="font-bold text-orange-500">{totalPrice.toLocaleString()}đ</span>
+                  </div>
+                </div>
+
+                {/* Nút đặt vé */}
+                <Button
+                  className="w-full bg-orange-400 hover:bg-orange-500 text-white py-3 text-md font-semibold cursor-pointer"
+                  disabled={selectedSeats.length === 0}
+                >
+                  Thanh toán
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-h-10 overflow-hidden">
+        {toast && <ToastNotification message={toast.message} type={toast.type} id={toast.id} />}
+      </div>
+    </>
+  );
 };
 
 export default BookingTicketsMovie;

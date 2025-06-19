@@ -73,7 +73,7 @@ const Register = () => {
     if (toast) {
       const timer = setTimeout(() => {
         setToast(null);
-      }, toast.autoClose || 5000);
+      }, toast.autoClose || 6000);
       return () => clearTimeout(timer);
     }
   }, [toast]);

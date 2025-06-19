@@ -30,6 +30,15 @@ export const createShowtimeApi = async (data) => {
   }
 };
 
+export const seatListAndStatusApi = async (maLichChieu) => {
+  try {
+    const response = await fetcher.get(`/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${maLichChieu}`);
+    return response.data.content;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const listShowtimeCinemaSystemApi = async (data) => {
   try {
     const response = await fetcher.get("/QuanLyRap/LayThongTinLichChieuHeThongRap", { params: data });
