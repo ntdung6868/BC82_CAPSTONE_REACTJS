@@ -9,7 +9,6 @@ import { useParams } from "react-router-dom";
 const BookingTicketsMovie = () => {
   const { maLichChieu } = useParams();
   const [selectedSeats, setSelectedSeats] = useState([]);
-  console.log("🚀 ~ BookingTicketsMovie ~ selectedSeats:", selectedSeats);
   const [seatsNormal, setSeatsNormal] = useState([]);
   const [seatsVip, setSeatsVip] = useState([]);
   const [toast, setToast] = useState(null);
@@ -105,7 +104,7 @@ const BookingTicketsMovie = () => {
           id: `add-seat-${Date.now()}`,
         });
       } else {
-        setSelectedSeats([...selectedSeats, { ...seat, viTriGhe: getSeatViTri(seat)}]);
+        setSelectedSeats([...selectedSeats, { ...seat, viTriGhe: getSeatViTri(seat) }]);
       }
     }
   };
